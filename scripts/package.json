@@ -1,0 +1,13 @@
+{
+  "name": "lza-universal-configuration-scripts",
+  "version": "0.0.0",
+  "main": "index.js",
+  "license": "Apache-2.0",
+  "author": {
+    "name": "Amazon Web Services",
+    "url": "https://aws.amazon.com/solutions"
+  },
+  "dependencies": {
+    "js-yaml": "^4.1.0"
+  }
+}

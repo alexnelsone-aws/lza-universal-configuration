@@ -1,0 +1,68 @@
+
+= Getting Started
+
+The Universal Config solution (UC) expands upon the default deployment of the link:https://docs.aws.amazon.com/solutions/latest/landing-zone-accelerator-on-aws/prerequisites.html[Landing Zone Accelerator on AWS] solution (LZA) while enabling and configuring certain AWS features.  This document will help you to deploy and start using the LZA with UC in place.
+
+
+Review the link:https://docs.aws.amazon.com/solutions/latest/landing-zone-accelerator-on-aws/prerequisites.html#for-aws-control-tower-based-installation[Landing Zone Accelerator on AWS] solution prerequisites.
+
+UC is configured to use Control Tower by default.  When you deploy LZA, it can set up Control Tower for you.  If you use this option, it's best to start with a new AWS organization without Control Tower setup.  If possible, you can create a new AWS account with a new AWS organization.  If you use this option, the steps to deploy LZA and setup UC are simple:
+
+1. Create a new AWS account that will be your AWS Organizations management account.  AWS supports plus addressing which lets you create multiple AWS accounts using the same email address by adding a + sign along with additional information to uniquely identify an AWS account.
+
+For AWS account emails, establish a consistent pattern:
+
+[your-email-address]+[account-name]@yourdomain.com For example:
+
+myemail+management@yourdomain.com myemail+audit@yourdomain.com myemail+logarchive@yourdomain.com
+
+notifications for these accounts will be sent to the same email inbox at myemail@yourdomain.com
+
+2.  link:https://docs.aws.amazon.com/organizations/latest/userguide/orgs_manage_org_create.html[Create a new AWS Organization] in the account.
+- Enable link:https://docs.aws.amazon.com/organizations/latest/userguide/orgs_manage_org_support-all-features.html[All Features] in the AWS Organization you created.
+
+The AWS Organizations Management Account, Log Archive Account, and Audit Account are required accounts by the LZA.  The SharedServices, Network, and Perimeter accounts are additional accounts required by UC.  All of these accounts will be created for you when you deploy LZA.
+
+3. Decide where you will store your LZA configuration files:
+* *codeconnection (preferred method)*:  AWS allows you to integrate with other source control systems using link:https://docs.aws.amazon.com/dtconsole/latest/userguide/welcome-connections.html[AWS CodeConnections].  If you want to use GithHub, GitHub Enterprise Edition, or GitLab then you should choose this option.  You will need to create a source code repository in the service that you will to use and commit the universal configuration files.  Next, you will need to create a CodeConnection before you deploy LZA:
+- Create a CodeConnection to the selected third party service where you created your source code repository.
+- Make note of the CodeConnection ARN, you will need it when you deploy LZA.
+- Make sure you have already created the repository and commited your changes with the updated universal Configuration files following steps 4-5.
+
+* *S3*:  This is the default setting and will use S3 as the location for your LZA configuration files.  This option allows you to initiate updates to your deployment by updating the configuration files and uploading them to the S3 location used by the pipeline.  This can be a flexible option if you intend to integrate LZA updates with your own pipeline.  If you select this option, you will need to first deploy the default configuration for LZA and then replace the config files with your updated UC config files, described in steps 3 and 4.
+
+* *codecommit*:  This option should no longer be used since link:https://aws.amazon.com/blogs/devops/how-to-migrate-your-aws-codecommit-repository-to-another-git-provider/[new customer enrollment ended on July 25, 2024].
+
+4. Update the `accounts-config.yaml` with the email address for the AWS management account you created in step 1.  Next, determine the email addresses that will be used to register new AWS accounts for Audit, LogArchive, SharedServices, Network, and Perimeter.  LZA will create new AWS accounts upon deployment and register them for you.
+
+5. Update the `replacements-config.yaml` with your deployment specific settings.
+
+- Prefix Selection
+- Primary Region Selection
+- Notification Settings
+- Budget Notifications
+- Security Notifications
+
+
+
+== Deploy LZA
+In order to get started, follow the standard directions for deployment of LZA:
+
+1.  Sign into the AWS Organizations Management account.
+2.  link:https://docs.aws.amazon.com/solutions/latest/landing-zone-accelerator-on-aws/step-1.-launch-the-stack.html[Launch the solution template]
+3. Ensure that the stack deployment parameters are the same as those defined in your updated LZA configuration files:
+- Set the account email addresses for the Management, LogArchive and Audit accounts to the same values that you set in your updated `accounts-config.yaml` file.
+- Set the `Accelerator Resource name prefix` to the same value as you set in the `replacements-config.yaml`.
+- Set the *Use Existing Config Repository* option to the deployment option you intend to use.  For example, for the preferred codeconnections option:
+* Configuration Repository Location: codeconnections
+* Existing Config Repository Name:  the name of your repository in your source control system, for example `aws-accelerator-config`.
+* Existing Config Repository Branch Name:  The branch that contains the configuration files you want to deploy and use, for example: `main`.
+* Existing Config Repository Owner:  The owner of the repository, for example, your GitHub username.
+* Existing Config Repository CodeConnection ARN:  The CodeConnection you setup to provide AWS access to your source control system.
+
+== Verify Successful Deployment
+1. Wait until the Cloudformation stack you deployed for LZA reaches a `CREATE_COMPLETE` state.
+2. Go to the CodePipeline service console page and confirm the `Installer` pipeline has succeeded execution.
+3. Open the `Pipeline` for LZA and follow its execution.  If you enabled the Approval stage when you deployed LZA, then you will need to approve the deployment in the `Review` stage of the pipeline to complete deployment.
+
+Once you have confirmed successful deployment, you can continue with further customizing and operating your LZA deployment.  Refer to the appropriate documentation section for help with updates and configuration choices.
