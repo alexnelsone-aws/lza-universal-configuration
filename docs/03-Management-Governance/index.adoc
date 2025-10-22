@@ -69,7 +69,7 @@ The Test OU contains accounts used for formal validation, quality assurance, and
 Test accounts typically contain sensitive data and workloads similar to production but in a controlled testing context.  This environment is critical for validating both application functionality and infrastructure changes before they reach production systems.
 
 ====== Prod
-The Prod (Production) OU contains accounts that host business and missing-critical applications and services for business operations. This OU implements the strictest security controls, change management processes, and access restrictions. Production accounts typically have enhanced monitoring, more aggressive backup schedules, and stricter network controls than other environments.
+The Prod (Production) OU contains accounts that host business and mission-critical applications and services for business operations. This OU implements the strictest security controls, change management processes, and access restrictions. Production accounts typically have enhanced monitoring, more aggressive backup schedules, and stricter network controls than other environments.
 
 Accounts in the Prod OU are ideally locked down with only specific Operations and Security personnel having access. Due to the critical nature of these workloads, changes to Production accounts and resources should require additional approval steps and formal change management processes.
 
