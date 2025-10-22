@@ -131,7 +131,7 @@ AWS Control Tower offers two approaches to Regional deny:
 * **Landing Zone Level Region Deny**: Applied broadly across your AWS Control Tower environment
 * **OU Level Region Deny**: More granular control that can be applied to specific Organizational Units
 
-For detailed information on implementing and managing Control Tower Regional Deny controls, refer to the link:../07-Operations/07-06-Control-Tower-Regional-Deny.adoc[Control Tower Regional Deny Operations Guide].
+For detailed information on implementing and managing Control Tower Regional Deny controls, refer to the link:../07-Operations/07-07-Control-Tower-Regional-Deny.adoc[Control Tower Regional Deny Operations Guide].
 
 Control Tower provides several key benefits that are enhanced by the Landing Zone Accelerator:
 
