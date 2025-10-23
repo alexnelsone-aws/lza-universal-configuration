@@ -232,7 +232,7 @@ This architecture creates a security-focused boundary that enables comprehensive
 
 ===== SharedServices Account
 
-The ShareService account allows customers to deliver common infrastructure services across your organization. Without this centralized approach, organizations typically experience inconsistent service implementations, increased management overhead, and higher costs due to service duplication.
+The SharedServices account allows customers to deliver common infrastructure services across your organization. Without this centralized approach, organizations typically experience inconsistent service implementations, increased management overhead, and higher costs due to service duplication.
 
 The LZA Universal Config configures this account as the operations center for your AWS environment, implementing:
 
